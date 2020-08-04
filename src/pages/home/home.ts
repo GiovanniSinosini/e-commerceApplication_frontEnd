@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
-import { CredentialsDTO } from '../../models/credentialsDTO';
+import { CredentialsDTO } from '../../models/credentials.dto';
 import { AuthService } from '../../services/auth.service';
 
 @IonicPage()
