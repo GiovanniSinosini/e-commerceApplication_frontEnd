@@ -24,7 +24,16 @@ export class AuthService {
                 observe: 'response',   // get the header of the response
                 responseType: 'text'   // to avoid Json parse error, as the return is empty
             });
+    }
 
+    refreshToken(){
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/refresh_token`,
+            {},
+            {
+                observe: 'response',   // get the header of the response
+                responseType: 'text'   // to avoid Json parse error, as the return is empty
+            });
     }
 
     successfulLogin(authorizationValue : string){
