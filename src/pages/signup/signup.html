@@ -11,16 +11,16 @@
 </ion-header>
 
 <ion-content padding>
-  <form (ngSubmit)="signupUser(); $event.preventDefault()">
+  <form [formGroup]="formGroup" (ngSubmit)="signupUser(); $event.preventDefault()">
     <ion-item>
       <ion-label stacked>Name*</ion-label>
-      <ion-input name="name" type="text"></ion-input>
+      <ion-input formControlName="name" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Email*</ion-label>
-      <ion-input name="email" type="text"></ion-input>
+      <ion-input formControlName="email" type="text"></ion-input>
     </ion-item>
-    <ion-list radio-group name="type">
+    <ion-list radio-group formControlName="type">
       <ion-list-header>
         Client Type
       </ion-list-header>
@@ -36,54 +36,54 @@
 
     <ion-item>
       <ion-label stacked>NIF</ion-label>
-      <ion-input name="nif" type="text"></ion-input>
+      <ion-input formControlName="nif" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Password*</ion-label>
-      <ion-input name="password" type="password"></ion-input>
+      <ion-input formControlName="password" type="password"></ion-input>
     </ion-item> 
     <ion-item>
       <ion-label stacked>Address*</ion-label>
-      <ion-input name="address" type="text"></ion-input>
+      <ion-input formControlName="address" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Number*</ion-label>
-      <ion-input name="number" type="text"></ion-input>
+      <ion-input formControlName="number" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Complement</ion-label>
-      <ion-input name="complement" type="text"></ion-input>
+      <ion-input formControlName="complement" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>District</ion-label>
-      <ion-input name="district" type="text"></ion-input>
+      <ion-input formControlName="district" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>City Id*</ion-label>
-      <ion-input name="cityId" type="text"></ion-input>
+      <ion-input formControlName="cod" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Phone 1*</ion-label>
-      <ion-input name="phone1" type="text"></ion-input>
+      <ion-input formControlName="phone1" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Phone 2</ion-label>
-      <ion-input name="Phone2" type="text"></ion-input>
+      <ion-input formControlName="phone2" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Phone 3</ion-label>
-      <ion-input name="Phone3" type="text"></ion-input>
+      <ion-input formControlName="phone3" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>State*</ion-label>
-      <ion-select name="stateId" (ionChange)="updateCities()">
+      <ion-select formControlName="stateId" (ionChange)="updateCities()">
         <ion-option value="1">Porto</ion-option>
         <ion-option value="2">Lisboa</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label stacked>City*</ion-label>
-      <ion-select name="cityId">
+      <ion-select formControlName="cityId">
         <ion-option value="1">Maia</ion-option>
         <ion-option value="2">Cascais</ion-option>
       </ion-select>
