@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CityService } from '../../services/domain/city.service';
 import { StateService } from '../../services/domain/state.service';
 import { StateDTO } from '../../models/state.dto';
 import { CityDTO } from '../../models/city.dto';
+import { ClientService } from '../../services/domain/client.service';
 
 @IonicPage()
 @Component({
@@ -22,15 +23,17 @@ export class SignupPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public cityService: CityService,
-    public stateService: StateService) {
+    public stateService: StateService,
+    public clientService: ClientService,
+    public alertCtrl: AlertController) {
     
       this.formGroup = this.formBuilder.group({
         name: ['TestName', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
         email: ['test@gmail.com', [Validators.required, Validators.email]],
         type : ['1', [Validators.required]],
-        nif : ['06134596280', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
+        nif : ['294811500', [Validators.required]],
         password : ['123', [Validators.required]],
-        address : ['Test Street', [Validators.required]],
+        street : ['Test Street', [Validators.required]],
         number : ['25', [Validators.required]],
         complement : ['Apart 3', []],
         district : ['PortoTest', []],
@@ -64,6 +67,27 @@ export class SignupPage {
   }
 
   signupUser(){
-    console.log('Submitted the form');
+    this.clientService.insert(this.formGroup.value)
+      .subscribe(response => {
+        this.showInsertOk();
+      },
+      error => {});
+  }
+
+  showInsertOk(){
+    let alert = this.alertCtrl.create({
+      title: 'Success',
+      message: 'Registration successfully complete.',
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

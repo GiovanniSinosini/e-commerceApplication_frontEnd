@@ -48,9 +48,9 @@
     <p class="danger" *ngIf="formGroup.controls.password.dirty && formGroup.controls.password.errors" margin-left>Invalid value.</p>
     <ion-item>
       <ion-label stacked>Address*</ion-label>
-      <ion-input formControlName="address" type="text"></ion-input>
+      <ion-input formControlName="street" type="text"></ion-input>
     </ion-item>
-    <p class="danger" *ngIf="formGroup.controls.address.dirty && formGroup.controls.address.errors" margin-left>Invalid value.</p>
+    <p class="danger" *ngIf="formGroup.controls.street.dirty && formGroup.controls.street.errors" margin-left>Invalid value.</p>
     <ion-item>
       <ion-label stacked>Number*</ion-label>
       <ion-input formControlName="number" type="text"></ion-input>
