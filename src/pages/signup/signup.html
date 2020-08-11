@@ -16,10 +16,12 @@
       <ion-label stacked>Name*</ion-label>
       <ion-input formControlName="name" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.name.dirty && formGroup.controls.name.errors" margin-left>Invalid value.</p>
     <ion-item>
       <ion-label stacked>Email*</ion-label>
       <ion-input formControlName="email" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.errors" margin-left>Invalid value.</p>
     <ion-list radio-group formControlName="type">
       <ion-list-header>
         Client Type
@@ -38,14 +40,17 @@
       <ion-label stacked>NIF</ion-label>
       <ion-input formControlName="nif" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.nif.dirty && formGroup.controls.nif.errors" margin-left>Invalid value.</p>
     <ion-item>
       <ion-label stacked>Password*</ion-label>
       <ion-input formControlName="password" type="password"></ion-input>
     </ion-item> 
+    <p class="danger" *ngIf="formGroup.controls.password.dirty && formGroup.controls.password.errors" margin-left>Invalid value.</p>
     <ion-item>
       <ion-label stacked>Address*</ion-label>
       <ion-input formControlName="address" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.address.dirty && formGroup.controls.address.errors" margin-left>Invalid value.</p>
     <ion-item>
       <ion-label stacked>Number*</ion-label>
       <ion-input formControlName="number" type="text"></ion-input>
@@ -66,6 +71,7 @@
       <ion-label stacked>Phone 1*</ion-label>
       <ion-input formControlName="phone1" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.phone1.dirty && formGroup.controls.phone1.errors" margin-left>Invalid value.</p>
     <ion-item>
       <ion-label stacked>Phone 2</ion-label>
       <ion-input formControlName="phone2" type="text"></ion-input>
@@ -86,6 +92,6 @@
         <ion-option *ngFor="let city of cities" [value]="city.id">{{city.name}}</ion-option>
       </ion-select>
     </ion-item>
-    <button ion-button block type="submit">Sign Up</button>
+    <button ion-button block type="submit" [disabled]="formGroup.invalid">Sign Up</button>
   </form>
 </ion-content>
