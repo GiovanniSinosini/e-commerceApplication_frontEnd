@@ -28,4 +28,8 @@ export class CategoriesPage {
     );
   }
 
+  showProducts(){
+    this.navCtrl.push('ProductsPage');
+  }
+
 }
