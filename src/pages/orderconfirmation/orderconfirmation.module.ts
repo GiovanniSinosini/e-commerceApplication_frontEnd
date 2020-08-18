@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { OrderconfirmationPage } from './orderconfirmation';
+import { OrderService } from '../../services/domain/order.service';
 
 @NgModule({
   declarations: [
@@ -9,5 +10,8 @@ import { OrderconfirmationPage } from './orderconfirmation';
   imports: [
     IonicPageModule.forChild(OrderconfirmationPage),
   ],
+  providers: [
+    OrderService
+  ]
 })
 export class OrderconfirmationPageModule {}
