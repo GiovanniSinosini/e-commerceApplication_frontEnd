@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AddressDTO } from '../../models/address.dto';
 import { StorageService } from '../../services/storage.service';
 import { ClientService } from '../../services/domain/client.service';
+import { OrderDTO } from '../../models/order.dto';
+import { CartService } from '../../services/domain/cart.service';
 
 @IonicPage()
 @Component({
@@ -13,11 +15,14 @@ export class PickAddressPage {
 
   items: AddressDTO[];
 
+  order: OrderDTO;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public storage: StorageService,
-    public clientService: ClientService) {
+    public clientService: ClientService,
+    public cartService: CartService) {
   }
 
   ionViewDidLoad() {
@@ -25,7 +30,16 @@ export class PickAddressPage {
     if (localUser && localUser.email){
       this.clientService.findByEmail(localUser.email)
         .subscribe(response => {
-          this.items = response['adresses']
+          this.items = response['adresses'];
+
+          let cart = this.cartService.getCart();
+
+          this.order = {
+            client : {id: response['id']},
+            addressDelivery : null,
+            payment : null,
+            items: cart.items.map(x => {return {quantity: x.quantity, product: {id: x.product.id}}})
+          }
         },
     error => {
               if (error.status == 403){
@@ -36,5 +50,10 @@ export class PickAddressPage {
     else{
       this.navCtrl.setRoot('HomePage');
     }  
+  }
+
+  nextPage(item: AddressDTO){
+    this.order.addressDelivery = {id: item.id};
+    console.log(this.order);
   }
 }
