@@ -21,6 +21,10 @@ export class CategoriesPage {
   }
 
   ionViewDidLoad() {
+    this.loadData();
+  }
+
+  loadData(){
     this.categoryService.findAll()
       .subscribe(response => {this.items = response; // callback fuction
     },
@@ -30,6 +34,13 @@ export class CategoriesPage {
 
   showProducts(category_id : string){
     this.navCtrl.push('ProductsPage', {category_id : category_id});
+  }
+
+  doRefresh(refresher) {
+    this.loadData();
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
 
 }
