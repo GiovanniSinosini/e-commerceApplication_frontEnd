@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
 import { ClientDTO } from '../../models/client.dto';
 import { ClientService } from '../../services/domain/client.service';
@@ -21,10 +21,15 @@ export class ProfilePage {
     public navParams: NavParams,
     public storage: StorageService,
     public clientService: ClientService,
-    public camera: Camera) {
+    public camera: Camera,
+    public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
+    this.loadData();
+  }
+
+  loadData(){
     let localUser = this.storage.getLocalUser();
     if (localUser && localUser.email){
       this.clientService.findByEmail(localUser.email)
@@ -57,7 +62,7 @@ export class ProfilePage {
 
       const options: CameraOptions = {
         quality: 100,
-        destinationType: this.camera.DestinationType.FILE_URI,
+        destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.PNG,
         mediaType: this.camera.MediaType.PICTURE
       }
@@ -67,6 +72,38 @@ export class ProfilePage {
        this.cameraOn = false;
       }, (err) => {
       });
+    }
+
+    sendPicture(){
+      let loader = this.presentLoading();
+      this.clientService.uploadPicture(this.picture)
+        .subscribe(response => {
+          this.picture = null;
+          this.loadData();
+          loader.dismiss();
+        },
+        error =>{   
+        loader.dismiss();
+        });
+    }
+
+    cancelPicture(){
+      this.picture = null;
+    }
+
+    doRefresh(refresher) {
+      this.loadData();
+      setTimeout(() => {
+        refresher.complete();
+      }, 1000);
+    }
+
+    presentLoading() {
+      let loader = this.loadingCtrl.create({
+        content: "Please wait..."
+      });
+      loader.present();
+      return loader;
     }
 }
 

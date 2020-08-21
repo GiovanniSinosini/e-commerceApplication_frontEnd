@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-avatar>
     <img class="circle" [src]="client?.imageUrl || 'assets/imgs/avatar-blank.png'">
   </ion-avatar>
@@ -23,6 +26,9 @@
     </ion-item>
       <ion-item>
         <button ion-button block (click)="getCameraPicture()" [disabled]="cameraOn">Camera</button>
+        <button *ngIf="picture" ion-button outline block (click)="sendPicture()">Send image</button>
+        <button *ngIf="picture" ion-button outline block (click)="cancelPicture()">Discard image</button>
+
       </ion-item>
   </ion-card> 
 </ion-content>
