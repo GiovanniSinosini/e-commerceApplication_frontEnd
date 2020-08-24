@@ -105,5 +105,6 @@ export class ProfilePage {
       loader.present();
       return loader;
     }
+
 }
 
