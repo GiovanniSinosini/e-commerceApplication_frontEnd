@@ -5,6 +5,7 @@ import { ClientDTO } from '../../models/client.dto';
 import { ClientService } from '../../services/domain/client.service';
 import { API_CONFIG } from '../../config/api.config';
 import { CameraOptions, Camera } from '@ionic-native/camera';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @IonicPage()
 @Component({
@@ -16,13 +17,17 @@ export class ProfilePage {
   client : ClientDTO;
   picture : string;
   cameraOn : boolean = false;
+  profileImage;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public storage: StorageService,
     public clientService: ClientService,
     public camera: Camera,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public sanitizer:  DomSanitizer) {
+
+      this.profileImage = 'assets/imgs/avatar-blank.png';
   }
 
   ionViewDidLoad() {
@@ -52,8 +57,23 @@ export class ProfilePage {
       this.clientService.getImageFromBucket(this.client.id)
       .subscribe(response => {
         this.client.imageUrl = `${API_CONFIG.bucketBaseUrl}cp${this.client.id}.jpg`;
+        this.blobToDataURL(response).then(dataUrl =>{
+          let str : string = dataUrl as string;
+          this.profileImage = this.sanitizer.bypassSecurityTrustUrl(str);
+        });
       },
-      error => {});
+      error => {
+        this.profileImage = 'assets/imgs/avatar-blank.png';
+      });
+    }
+
+    blobToDataURL(blob) {
+      return new Promise((fulfill, reject) => {
+          let reader = new FileReader();
+          reader.onerror = reject;
+          reader.onload = (e) => fulfill(reader.result);
+          reader.readAsDataURL(blob);
+      });
     }
 
     getCameraPicture(){
@@ -82,7 +102,7 @@ export class ProfilePage {
         quality: 100,
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         destinationType: this.camera.DestinationType.DATA_URL,
-        encodingType: this.camera.EncodingType.PNG,
+        encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE
       }
       this.camera.getPicture(options).then((imageData) => {
@@ -98,7 +118,7 @@ export class ProfilePage {
       this.clientService.uploadPicture(this.picture)
         .subscribe(response => {
           this.picture = null;
-          this.loadData();
+          this.getImageIfExists();
           loader.dismiss();
         },
         error =>{   
