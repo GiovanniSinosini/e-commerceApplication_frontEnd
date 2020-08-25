@@ -73,7 +73,7 @@ export class ProfilePage {
           reader.onerror = reject;
           reader.onload = (e) => fulfill(reader.result);
           reader.readAsDataURL(blob);
-      });
+      })
     }
 
     getCameraPicture(){
@@ -83,7 +83,7 @@ export class ProfilePage {
       const options: CameraOptions = {
         quality: 100,
         destinationType: this.camera.DestinationType.DATA_URL,
-        encodingType: this.camera.EncodingType.JPEG,
+        encodingType: this.camera.EncodingType.PNG,
         mediaType: this.camera.MediaType.PICTURE
       }
       this.camera.getPicture(options).then((imageData) => {
@@ -91,6 +91,7 @@ export class ProfilePage {
        this.cameraOn = false;
       }, (err) => {
         this.cameraOn = false;
+        this.navCtrl.setRoot('ProfilePage');
       });
     }
 
@@ -102,7 +103,7 @@ export class ProfilePage {
         quality: 100,
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         destinationType: this.camera.DestinationType.DATA_URL,
-        encodingType: this.camera.EncodingType.JPEG,
+        encodingType: this.camera.EncodingType.PNG,
         mediaType: this.camera.MediaType.PICTURE
       }
       this.camera.getPicture(options).then((imageData) => {
@@ -110,6 +111,7 @@ export class ProfilePage {
       this.cameraOn = false;
       }, (err) => {
         this.cameraOn = false;
+        this.navCtrl.setRoot('ProfilePage');
       });
     }
 
@@ -123,6 +125,7 @@ export class ProfilePage {
         },
         error =>{   
         loader.dismiss();
+        this.navCtrl.setRoot('ProfilePage');
         });
     }
 
